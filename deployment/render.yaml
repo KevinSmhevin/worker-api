@@ -1,0 +1,60 @@
+services:
+  - type: web
+    name: worker-api
+    runtime: docker
+    dockerfilePath: docker/api.Dockerfile
+    dockerContext: .
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: worker-api-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: worker-api-redis
+          type: redis
+          property: connectionString
+      - key: CELERY_BROKER_URL
+        fromService:
+          name: worker-api-redis
+          type: redis
+          property: connectionString
+      - key: SENTRY_DSN
+        sync: false
+
+  - type: worker
+    name: worker-api-celery
+    runtime: docker
+    dockerfilePath: docker/worker.Dockerfile
+    dockerContext: .
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: worker-api-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: worker-api-redis
+          type: redis
+          property: connectionString
+      - key: CELERY_BROKER_URL
+        fromService:
+          name: worker-api-redis
+          type: redis
+          property: connectionString
+      - key: SENTRY_DSN
+        sync: false
+
+  - type: redis
+    name: worker-api-redis
+    plan: starter
+    maxmemoryPolicy: noeviction
+
+databases:
+  - name: worker-api-db
+    plan: starter
+    databaseName: worker_api
