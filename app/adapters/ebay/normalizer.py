@@ -21,9 +21,7 @@ GRADE_PATTERN = re.compile(
     r"\b(?:PSA|BGS|CGC|SGC|ACE)\s*(\d+(?:\.\d+)?)\b", re.IGNORECASE
 )
 
-CARD_NUMBER_PATTERN = re.compile(
-    r"\b(\d{1,4}\s*/\s*\d{1,4})\b"
-)
+CARD_NUMBER_PATTERN = re.compile(r"\b(\d{1,4}\s*/\s*\d{1,4})\b")
 
 PRICE_PATTERN = re.compile(r"\$?([\d,]+\.?\d*)")
 

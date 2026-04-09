@@ -59,9 +59,7 @@ async def get_by_content_hash(
     session: AsyncSession,
     content_hash: str,
 ) -> NormalizedRecord | None:
-    stmt = select(NormalizedRecord).where(
-        NormalizedRecord.content_hash == content_hash
-    )
+    stmt = select(NormalizedRecord).where(NormalizedRecord.content_hash == content_hash)
     result = await session.execute(stmt)
     return result.scalar_one_or_none()
 

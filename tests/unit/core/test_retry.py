@@ -19,8 +19,7 @@ class TestCalculateBackoff:
 
     def test_jitter_adds_randomness(self):
         delays = {
-            calculate_backoff(1, base_delay=10.0, jitter=True)
-            for _ in range(100)
+            calculate_backoff(1, base_delay=10.0, jitter=True) for _ in range(100)
         }
         assert len(delays) > 1
 

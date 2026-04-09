@@ -12,7 +12,9 @@ class Settings(BaseSettings):
     app_env: str = "development"
     debug: bool = False
 
-    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/worker_api"
+    database_url: str = (
+        "postgresql+asyncpg://postgres:postgres@localhost:5432/worker_api"
+    )
 
     redis_url: str = "redis://localhost:6379/0"
     celery_broker_url: str = "redis://localhost:6379/0"

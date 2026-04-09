@@ -25,9 +25,7 @@ async def run_persist(
     """
     if not records:
         await task_runs_repo.mark_task_run_success(session, task_run_id)
-        await jobs_repo.update_job_status(
-            session, job_id, status=JobStatus.COMPLETED
-        )
+        await jobs_repo.update_job_status(session, job_id, status=JobStatus.COMPLETED)
         logger.info("persist_no_new_records", job_id=str(job_id))
         return 0
 

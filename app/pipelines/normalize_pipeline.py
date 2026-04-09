@@ -25,9 +25,7 @@ async def run_normalize(
     duplicate_count = 0
 
     for record in normalized:
-        exists = await records_repo.exists_by_content_hash(
-            session, record.content_hash
-        )
+        exists = await records_repo.exists_by_content_hash(session, record.content_hash)
         if exists:
             duplicate_count += 1
         else:

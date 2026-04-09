@@ -4,7 +4,6 @@ These tests use FastAPI TestClient and require mocked DB/Celery
 since we can't assume Postgres and Redis are running in CI.
 """
 
-
 import pytest
 from fastapi.testclient import TestClient
 
