@@ -1,12 +1,14 @@
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
-from playwright.async_api import Browser, Page, async_playwright
+from playwright.async_api import Browser, Page, ViewportSize, async_playwright
 
 from app.core.exceptions import ScrapingError
 from app.core.logging import get_logger
 
 logger = get_logger(__name__)
+
+_DEFAULT_VIEWPORT: ViewportSize = {"width": 1280, "height": 720}
 
 
 @asynccontextmanager
@@ -23,13 +25,13 @@ async def get_browser(headless: bool = True) -> AsyncGenerator[Browser, None]:
 @asynccontextmanager
 async def get_page(
     headless: bool = True,
-    viewport: dict | None = None,
+    viewport: ViewportSize | None = None,
 ) -> AsyncGenerator[Page, None]:
     """Provide a single browser page with a fresh context."""
-    viewport = viewport or {"width": 1280, "height": 720}
+    effective_viewport: ViewportSize = viewport or _DEFAULT_VIEWPORT
     async with get_browser(headless=headless) as browser:
         context = await browser.new_context(
-            viewport=viewport,
+            viewport=effective_viewport,
             user_agent=(
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
                 "AppleWebKit/537.36 (KHTML, like Gecko) "

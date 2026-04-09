@@ -20,7 +20,7 @@ def calculate_backoff(
     delay = min(base_delay * (2**attempt), max_delay)
     if jitter:
         delay += random.uniform(0, delay * 0.25)
-    return delay
+    return float(delay)
 
 
 def get_max_retries(task_name: str) -> int:

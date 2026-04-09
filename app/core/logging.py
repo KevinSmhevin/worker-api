@@ -1,5 +1,6 @@
 import logging
 import sys
+from typing import cast
 
 import structlog
 
@@ -53,4 +54,4 @@ def setup_logging(json_output: bool = True, log_level: str = "INFO") -> None:
 
 
 def get_logger(name: str | None = None) -> structlog.stdlib.BoundLogger:
-    return structlog.get_logger(name)
+    return cast(structlog.stdlib.BoundLogger, structlog.get_logger(name))

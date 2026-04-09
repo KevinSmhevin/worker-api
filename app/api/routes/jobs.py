@@ -37,7 +37,10 @@ async def list_jobs(
     db: AsyncSession = Depends(get_db),
 ):
     jobs = await jobs_repo.list_jobs(db, status=status, limit=limit, offset=offset)
-    return JobListResponse(jobs=jobs, total=len(jobs))
+    return JobListResponse(
+        jobs=[JobResponse.model_validate(j) for j in jobs],
+        total=len(jobs),
+    )
 
 
 @router.get("/{job_id}", response_model=JobResponse)
